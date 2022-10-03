@@ -7,21 +7,34 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 
 public class TestWorkshop {
     WebDriver webDriver;
     WebDriverWait webDriverWait;
     @Before
-    public void beforeTest(){
-        WebDriverManager.chromedriver().setup();
-        webDriver = new ChromeDriver();
+    public void beforeTest() throws MalformedURLException {
+       // WebDriverManager.chromedriver().setup();
+       // webDriver = new ChromeDriver();
 
-        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(15));
+       // webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(15));
+
+        DesiredCapabilities desiredCapabilities =  new DesiredCapabilities();
+        desiredCapabilities.setCapability(CapabilityType.BROWSER_NAME,"firefox");
+        desiredCapabilities.setCapability("name","testViewProjectOfIphone14Pro");
+        webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub/"),desiredCapabilities);
+
+        webDriverWait = new WebDriverWait(webDriver,Duration.ofSeconds(30));
+
     }
 
     @After
